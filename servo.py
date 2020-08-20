@@ -5,21 +5,18 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(2, GPIO.OUT)
 servo = GPIO.PWM(2, 50)
 servo.start(0.0)
-
-bottom = 2.5  # -90deg : 0.5ms / 20ms = 2.5[%]
-middle = 7.25 #   0deg : 1.45ms / 20ms = 7.25[%]
-top = 12.0    #  90deg : 2.4ms / 20ms = 12.0[%]
+ 
+def setservo(d):
+    pulse = 0.5 + 1.9 * (d + 90) / 180
+    servo.ChangeDutyCycle(pulse / 20 * 100)
 
 for i in range(5):
-	servo.ChangeDutyCycle(bottom)
+        setservo(-90)
 	time.sleep(1.0)
 
-	servo.ChangeDutyCycle(middle)
+        setservo(0)
 	time.sleep(1.0)
 
-	servo.ChangeDutyCycle(top)
+        setservo(90)
 	time.sleep(1.0)
-
-
-
 
